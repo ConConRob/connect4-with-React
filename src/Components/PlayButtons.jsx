@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function PlayButtons({makeAMove, possiblePlays}) {
+export default function PlayButtons({playATurn, possiblePlays}) {
     function clickAction(Column){
-        makeAMove(Column);
+        playATurn(Column);
     }
     return (
         <div className="play-buttons">
