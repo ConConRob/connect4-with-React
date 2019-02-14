@@ -1,5 +1,5 @@
 import React from 'react';
-import BoardPosition from './BoardPosition';
+import PlayBoard from './PlayBoard';
 import initBoardState from './initial-board-state';
 import './board.css'
 export default class Board extends React.Component {
@@ -9,19 +9,7 @@ export default class Board extends React.Component {
   render() {
     return (
       <div className="play-area">
-      {
-        this.state.board.map(row => {
-          return (
-            <div className="row">
-              {
-              row.map(position => {
-                return <BoardPosition  stateOfPosition={position}/>
-              })   
-              }
-            </div>
-          )
-        })
-      }
+        <PlayBoard boardState={this.state.board} />
       </div>
     )
   }
