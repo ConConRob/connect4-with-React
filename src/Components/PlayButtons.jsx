@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function PlayButtons({makeAMove, possiblePlays}) {
     function clickAction(Column){
-        console.log(Column)
+        makeAMove(Column);
     }
     return (
         <div className="play-buttons">
