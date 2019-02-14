@@ -5,12 +5,12 @@ export default function PlayBoard({boardState}){
     return(
         <div className="play-board">
             {
-              boardState.map(row => {
+              boardState.map((row, index) => {
                 return (
-                  <div className="row">
+                  <div key={index} className="play-board-row">
                     {
-                    row.map(position => {
-                      return <BoardPosition  stateOfPosition={position}/>
+                    row.map((position, index)=> {
+                      return <BoardPosition key={index} stateOfPosition={position}/>
                     })   
                     }
                   </div>

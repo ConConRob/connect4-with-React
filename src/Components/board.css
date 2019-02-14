@@ -1,13 +1,21 @@
-.row {
-    display: flex;
-}
+
 .play-area {
     margin: 100px;
     display: flex;
+    flex-direction: column;
 }
 .play-board {
     background: yellow;
     padding: 10px;
+}
+.play-board-row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.play-buttons {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 /* =========Position CSS */
