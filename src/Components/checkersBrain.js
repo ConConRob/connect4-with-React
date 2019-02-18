@@ -1,7 +1,46 @@
 // takes in the state of the board and returns a col to play
 
-export default function decideOnPlay(boardState) {
-    // check if you have a 4 in a line win
+// const  initBoardState = [
+//     [0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0],
+// ]
+const playerNumber=2;
+const opponentPlayerNumber=1;
+
+export default function decideOnPlay(boardState, possiblePlays) {
+    //TOOLS
+    function isRight(colPos, rowPos,player){
+        if(boardState[colPos][rowPos+1]===player){
+            return true;
+        }
+        return false;
+    }
+    function isLeft(colPos, rowPos, player){
+        if(boardState[colPos][rowPos-1]===player){
+            return true;
+        }
+        return false;
+    }
+    function isDown(colPos, rowPos, player){
+        if(boardState[colPos+1] && boardState[colPos+1][rowPos]===player){
+            return true;
+        }
+        return false;
+    }
+    function isUp(colPos, rowPos, player){
+        if(boardState[colPos-1] && boardState[colPos-1][rowPos]===player){
+            return true;
+        }
+        return false;
+    }
+    // check if you can get have a 4 in a line win
+    possiblePlays.forEach((canPlay, rowIndex)=>{
+        console.log(isDown(5,rowIndex, opponentPlayerNumber), rowIndex)
+    })
     // check  if you need to stop other player's 4 in a line win
     // check if you need to stop other player's 2 turn win 
     // check if you can play for a 2 turn win 
