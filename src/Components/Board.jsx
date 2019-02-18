@@ -10,30 +10,30 @@ export default class Board extends React.Component {
       board: initBoardState,
       possiblePlays: [true,true,true,true,true,true,true],
       currentHeightofRows: [5,5,5,5,5,5,5],//5 is the bottom row 0 is the top row
+      winner: 0 // if winner changes to 1 or 2 depending on player
 
   }
   // play a turn is the control of the game
   playATurn = (usersColumnToPlay) =>{
     // get the users row played
-    const usersRowToPlay = this.state.currentHeightofRows[usersColumnToPlay];
-    // play the users play
+    
+    // play the users play and checks if it was a winning move
     this.makeAMove(usersColumnToPlay)
-    // check for win
-    this.isWinner(usersColumnToPlay, usersRowToPlay, 1);
+   
     // get the computers play
     const computersPlay = decideOnPlay();
     // play the computers play
-    //this.makeAMove(computersPlay, 2);
+    // this.makeAMove(computersPlay, 2);
     //update the plays the user can play
     this.updatePossiblePlays();
   }
 
-  // check if there is a winner function
-  isWinner = (cP, rP, pP) => { // (colPlayed, rowPlayed, playerPlayed) 
+  // check if there is a winner function if won returns player else returns 0
+  isWinner = (cP, rP, pP) => { // (colPlayed ( change goes left or right), rowPlayed(change goes up or down), playerPlayed) 
     let fdc=0;// firstDirectCount
     let sdc=0;// secondDirectionCount
     const board = this.state.board;
-      //check how matches many left========================
+      //check how many matches  left========================
       if(board[rP][cP-1]===pP){
         fdc=1;
         //check next space left
@@ -46,7 +46,7 @@ export default class Board extends React.Component {
           }
         }
       }
-      //check how matches many right
+      //check how many matches  right
       if(board[rP][cP+1]===pP){
         sdc=1;
         //check next space right
@@ -61,11 +61,11 @@ export default class Board extends React.Component {
       }
       // check total
       if(fdc+sdc>=3){
-        console.log("win");
+        return pP;
       }
     // check vertical win ===========================
     //only check down because can not have any on top of current play
-    //check how matches many down
+     //check how many matches  down
     // only check if 4th row up or above
       if(rP<=2){
         if(board[rP+1][cP]===pP){
@@ -73,25 +73,117 @@ export default class Board extends React.Component {
           if(board[rP+2][cP]===pP){
           //check next space down
             if(board[rP+3][cP]===pP){
-              console.log('win')
+              return pP
             }
           }
         }
       }
-
-      
-    //   //check how matches many down
+    // reset checks 
+    fdc =0;
+    sdc= 0;
+    //   //check how many matches  down
     // //check positive slope win=============================
-  
-      //check how matches many up right
-      //check how matches many down left
-    //check negative slop win ===============================
-      //check how matches many up left
-      //check how matches many down right
+    //check how many matches  up right
+      //check if can go up 1
+      if(board[rP-1]){
+        //check 1 right up
+        if(board[rP-1][cP+1] ===pP){
+          fdc=1;
+          if(board[rP-2]){
+            // check 2 right up
+            if(board[rP-2][cP+2] === pP){
+              fdc=2;
+              //chack if can go up  3 
+              if(board[rP-3]){
+                // check 3 right up
+                if(board[rP-3][cP+3]===pP){
+                  fdc=3;
+                }
+              }
+            }
+          }
+        }
+      }
+      //check how many matches  down left
+      //check if can go down 1
+      if(board[rP+1]){
+        //check 1 left down
+        if(board[rP+1][cP-1] ===pP){
+          sdc=1;
+          // check if can go down 2
+          if(board[rP+2]){
+            // check 2 left down
+            if(board[rP+2][cP-2]===pP){
+              sdc=2;
+              //chack if can go up  3 
+              if(board[rP+3]){
+                // check 3 left down
+                if(board[rP+3][cP-3]===pP){
+                  sdc=3;
+                }
+              }
+            }
+          }
+        }
+      }
+      if(fdc+sdc>=3){
+        return pP;
+      }
+      // reset 
+      fdc=0;
+      sdc=0;
+      //check negative slop win ===============================
+      //check how many matches  up left
+      // check 1 up
+      if(board[rP-1]){
+        //check 1 left up
+        if(board[rP-1][cP-1] ===pP){
+          fdc=1;
+          if(board[rP-2]){
+            // check 2 left up
+            if(board[rP-2][cP-2] === pP){
+              fdc=2;
+              //chack if can go up  3 
+              if(board[rP-3]){
+                // check 3 left up
+                if(board[rP-3][cP-3]===pP){
+                  fdc=3;
+                }
+              }
+            }
+          }
+        }
+      }
+      //check how many matches  down right
+      if(board[rP+1]){
+        //check 1 right down
+        if(board[rP+1][cP+1] ===pP){
+          sdc=1;
+          // check if can go down 2
+          if(board[rP+2]){
+            // check 2 right down
+            if(board[rP+2][cP+2]===pP){
+              sdc=2;
+              //chack if can go up  3 
+              if(board[rP+3]){
+                // check 3 right down
+                if(board[rP+3][cP+3]===pP){
+                  sdc=3;
+                }
+              }
+            }
+          }
+        }
+      }
+      if(fdc+sdc>=3){
+        return pP;
+      }
+      return 0;
   }
-
   // updates the board state and updates currentHeight of rows
-  makeAMove = (columnToPlay, player=1) => {
+  makeAMove = (columnToPlay,  player=1) => {
+    // get users row to play 
+    const rowToPlay = this.state.currentHeightofRows[columnToPlay];
     this.setState(currentState=>{
       const newBoardState= currentState.board.map((rowArr,rowIndex) => {
         // look for the row that is ar the right column height
@@ -120,8 +212,11 @@ export default class Board extends React.Component {
         board: newBoardState,
         currentHeightofRows: newCurrentHeightofRowsState
       }
-    })
-    
+    }, () => 
+      // check if there is a winner and set to state
+      this.setState( {winner: this.isWinner(columnToPlay, rowToPlay, player)})
+    );
+
   }
 
   // update possible plays so that buttons become disabled from user
