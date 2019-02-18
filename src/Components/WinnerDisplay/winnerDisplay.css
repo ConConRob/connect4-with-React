@@ -1,0 +1,29 @@
+.winner-display {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.274);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-header {
+    font-size: 50px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.winner-header.winner1 {
+    color: green;
+}
+
+.winner-header.winner2 {
+    color: red;
+} 
+.winner-reset-button{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}

@@ -2,17 +2,18 @@ import React from 'react';
 import PlayBoard from './PlayBoard';
 import PlayButtons from './PlayButtons'
 import initBoardState from './initial-board-state';
-
+import WinnerDisplay from './WinnerDisplay/WinnerDisplay'
 import decideOnPlay from './checkersBrain' // THE AI for this game
 import './board.css'
-export default class Board extends React.Component {
-  state = {
-      board: initBoardState,
-      possiblePlays: [true,true,true,true,true,true,true],
-      currentHeightofRows: [5,5,5,5,5,5,5],//5 is the bottom row 0 is the top row
-      winner: 0 // if winner changes to 1 or 2 depending on player
 
-  }
+const initState= {
+  board: initBoardState,
+  possiblePlays: [true,true,true,true,true,true,true],
+  currentHeightofRows: [5,5,5,5,5,5,5],//5 is the bottom row 0 is the top row
+  winner: 0 // if winner changes to 1 or 2 depending on player
+}
+export default class Board extends React.Component {
+  state = initState;
   // play a turn is the control of the game
   playATurn = (usersColumnToPlay) =>{
     // get the users row played
@@ -233,12 +234,17 @@ export default class Board extends React.Component {
       }
     })
   }
-
+  
+  // reset the game
+  resetGame = () => {
+    this.setState(initState);
+  }
   render() {
     return (
       <div className="play-area">
         <PlayBoard boardState={this.state.board} />
         <PlayButtons playATurn={this.playATurn} possiblePlays={this.state.possiblePlays} />
+        <WinnerDisplay winner={ this.state.winner } resetGame={this.resetGame}/>
       </div>
     )
   }

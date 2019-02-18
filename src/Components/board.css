@@ -3,6 +3,7 @@
     margin: 100px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 .play-board {
     background: yellow;
