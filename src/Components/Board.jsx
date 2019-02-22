@@ -17,21 +17,22 @@ export default class Board extends React.Component {
   // play a turn is the control of the game
   playATurn = (usersColumnToPlay) =>{
     // get the users row played
-    
-    // play the users play and checks if it was a winning move
-    this.makeAMove(usersColumnToPlay)
-   
-    // get the computers play
-    const computersPlay = decideOnPlay();
-    // play the computers play
-    // this.makeAMove(computersPlay, 2);
+    // play the users play and checks if it was a winning move then make the computers play
+    this.makeAMove(usersColumnToPlay, 1, this.computersTurn )
+      
     //update the plays the user can play
     this.updatePossiblePlays();
+  }
+
+  computersTurn = (board, rowHeight) =>{
+    const computersPlay = decideOnPlay(board, rowHeight);
+    this.makeAMove(computersPlay, 2);
   }
 
   // check if there is a winner function if won returns player else returns 0
   isWinner = (cP, rP, pP) => { // (colPlayed ( change goes left or right), rowPlayed(change goes up or down), playerPlayed) 
     let fdc=0;// firstDirectCount
+    
     let sdc=0;// secondDirectionCount
     const board = this.state.board;
       //check how many matches  left========================
@@ -43,7 +44,7 @@ export default class Board extends React.Component {
         //check next space left
           if(board[rP][cP-3]===pP){
             fdc=3;
-          //check next space left
+          
           }
         }
       }
@@ -56,7 +57,7 @@ export default class Board extends React.Component {
         //check next space right
           if(board[rP][cP+3]===pP){
             sdc=3;
-          //check next space right
+          
           }
         }
       }
@@ -182,7 +183,7 @@ export default class Board extends React.Component {
       return 0;
   }
   // updates the board state and updates currentHeight of rows
-  makeAMove = (columnToPlay,  player=1) => {
+  makeAMove = (columnToPlay, player=1, callBack=()=>{}) => {
     // get users row to play 
     const rowToPlay = this.state.currentHeightofRows[columnToPlay];
     this.setState(currentState=>{
@@ -208,14 +209,20 @@ export default class Board extends React.Component {
         }
         return currentHeight;
       })
+      // check if winner 
+      const winner = this.isWinner(columnToPlay, rowToPlay, player);
       // setting
       return {
         board: newBoardState,
-        currentHeightofRows: newCurrentHeightofRowsState
+        currentHeightofRows: newCurrentHeightofRowsState,
+        winner: winner
       }
-    }, () => 
-      // check if there is a winner and set to state
-      this.setState( {winner: this.isWinner(columnToPlay, rowToPlay, player)})
+    }, 
+      () =>{
+        if(this.state.winner===0){
+          callBack(this.state.board, this.state.possiblePlays)
+        }
+      }
     );
 
   }
