@@ -37,9 +37,34 @@ export default function decideOnPlay(boardState, possiblePlays) {
         }
         return false;
     }
+    function isUpRight(colPos, rowPos, player){
+        if(boardState[colPos-1] && boardState[colPos-1][rowPos+1]===player){
+            return true;
+        }
+        return false;
+    }
+    function isUpLeft(colPos, rowPos, player){
+        if(boardState[colPos-1] && boardState[colPos-1][rowPos-1]===player){
+            return true;
+        }
+        return false;
+    }
+    function isDownRight(colPos, rowPos, player){
+        if(boardState[colPos+1] && boardState[colPos+1][rowPos+1]===player){
+            return true;
+        }
+        return false;
+    }
+    function isDownLeft(colPos, rowPos, player){
+        if(boardState[colPos+1] && boardState[colPos+1][rowPos-1]===player){
+            return true;
+        }
+        return false;
+    }
+
     // check if you can get have a 4 in a line win
     possiblePlays.forEach((canPlay, rowIndex)=>{
-        console.log(isDown(5,rowIndex, opponentPlayerNumber), rowIndex)
+        console.log(isDownLeft(4,rowIndex, opponentPlayerNumber), rowIndex)
     })
     // check  if you need to stop other player's 4 in a line win
     // check if you need to stop other player's 2 turn win 

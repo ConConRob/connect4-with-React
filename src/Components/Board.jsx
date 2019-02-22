@@ -75,7 +75,6 @@ export default class Board extends React.Component {
           if(board[rP+2][cP]===pP){
           //check next space down
             if(board[rP+3][cP]===pP){
-              console.log('here')
               return pP
             }
           }
@@ -212,7 +211,6 @@ export default class Board extends React.Component {
       })
       // check if winner 
       const winner = this.isWinner(columnToPlay, rowToPlay, player);
-      console.log(winner)
       // setting
       return {
         board: newBoardState,
