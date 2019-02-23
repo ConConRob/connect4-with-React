@@ -3,7 +3,7 @@ import PlayBoard from './PlayBoard';
 import PlayButtons from './PlayButtons'
 import initBoardState from './initial-board-state';
 import WinnerDisplay from './WinnerDisplay/WinnerDisplay'
-import decideOnPlay from './checkersBrain' // THE AI for this game
+import decideOnPlay from './connect4Brain' // THE AI for this game
 import './board.css'
 
 const initState= {
@@ -25,7 +25,7 @@ export default class Board extends React.Component {
   }
 
   computersTurn = (board, rowHeight) =>{
-    const computersPlay = decideOnPlay(board, rowHeight);
+    const computersPlay = decideOnPlay(board);
     this.makeAMove(computersPlay, 2);
   }
 

@@ -11,7 +11,23 @@
 const playerNumber=2;
 const opponentPlayerNumber=1;
 
-export default function decideOnPlay(boardState, possiblePlays) {
+
+const basedOnMeMultiplier = 3;
+const basedOnMeOneMatchScore = 1;
+const basedOnMeTwoMatchScore = 2;
+const basedOnMeThreeMatchScore = 9999;
+
+const basedOnOppenentMultiplier = 2;
+const basedOnOppenentOneMatchScore = .5;
+const basedOnOppenentTwoMatchScore = 2;
+const basedOnOppenentThreeMatchScore = 999;
+
+const basedOnNoPlayMultiplier = 1;
+const basedOnNoPlayOneMatchScore = 1;
+const basedOnNoPlayTwoMatchScore = 2;
+const basedOnNoPlayThreeMatchScore = 2;
+
+export default function decideOnPlay(boardState) {
     //TOOLS
     function isRight(colPos, rowPos,player){
         if(boardState[colPos][rowPos+1]===player){
@@ -61,6 +77,16 @@ export default function decideOnPlay(boardState, possiblePlays) {
         }
         return false;
     }
+    function getScore(numberMatches,oneMatchScore,twoMatchScore,threeMatchScore){
+        if(numberMatches===1){
+            return oneMatchScore
+        }else if(numberMatches===2){
+            return twoMatchScore
+        }else if(numberMatches>=3){
+            return threeMatchScore
+        }
+        return 0;
+    }
     // for every  spot calculate a score depending on  how many in a row
     // if can't play spot give a score of -1 
     const valueOfPlaysBoard = boardState.map((row, yIndex) => 
@@ -76,21 +102,20 @@ export default function decideOnPlay(boardState, possiblePlays) {
             // DONE filtering out unavailable plays
             // get value base on computers players
 
-            const valueBasedOnMe = getValueOfSpot(xIndex, yIndex, playerNumber, 1.5);
-            const valueBaseOnOtherPlayer =getValueOfSpot(xIndex, yIndex, opponentPlayerNumber, 1);
-            const valueBaseOnUnplayedSpace = getValueOfSpot(xIndex, yIndex, 0 , 0.5);
-            return   valueBasedOnMe + valueBaseOnOtherPlayer;
+            const valueBasedOnMe = getValueOfSpot(xIndex, yIndex, playerNumber, basedOnMeMultiplier, basedOnMeOneMatchScore, basedOnMeTwoMatchScore, basedOnMeThreeMatchScore);
+            const valueBaseOnOtherPlayer =getValueOfSpot(xIndex, yIndex, opponentPlayerNumber, basedOnOppenentMultiplier, basedOnOppenentOneMatchScore, basedOnOppenentTwoMatchScore, basedOnOppenentThreeMatchScore);
+            const valueBaseOnUnplayedSpace = getValueOfSpot(xIndex, yIndex, 0 , basedOnNoPlayMultiplier, basedOnNoPlayOneMatchScore, basedOnNoPlayTwoMatchScore, basedOnNoPlayThreeMatchScore);
+            return   valueBasedOnMe + valueBaseOnOtherPlayer + valueBaseOnUnplayedSpace;
         }) 
     )
-
-    function getValueOfSpot(xIndex, yIndex, checkFor, multiplier){
+    function getValueOfSpot(xIndex, yIndex, checkFor, multiplier,oneMatchScore,twoMatchScore,threeMatchScore){
         let leftMatch = 0; 
         if(isLeft(yIndex,xIndex,checkFor)){
             leftMatch=1;
             if(isLeft(yIndex,xIndex-1,checkFor)){
                 leftMatch=2;
                 if(isLeft(yIndex,xIndex-2,checkFor)){
-                    return 999;
+                    leftMatch=3;
                 }
             }
         }
@@ -100,24 +125,24 @@ export default function decideOnPlay(boardState, possiblePlays) {
             if(isRight(yIndex,xIndex+1,checkFor)){
                 rightMatch=2;
                 if(isRight(yIndex,xIndex+2,checkFor)){
-                    return 999;
+                    rightMatch=3;
                 }
             }
         } 
-        const horizontal = rightMatch+leftMatch;
-        if( horizontal >=3){
-            return 999;
-        }
+        const horizontalScore = getScore(rightMatch+leftMatch,oneMatchScore,twoMatchScore,threeMatchScore);
+
+    
         let vertical=0;
         if(isDown(yIndex,xIndex,checkFor)){
             vertical=1;
             if(isDown(yIndex+1,xIndex,checkFor)){
                 vertical=2;
                 if(isDown(yIndex+2,xIndex,checkFor)){
-                    return 999;
+                    vertical=3;
                 }
             }
         }
+        const  verticalScore = getScore(vertical,oneMatchScore,twoMatchScore,threeMatchScore);
         // positive slope match 
         let upRightMatch = 0;
 
@@ -126,7 +151,7 @@ export default function decideOnPlay(boardState, possiblePlays) {
             if(isUpRight(yIndex-1,xIndex+1,checkFor)){
                 upRightMatch=2;
                 if(isUpRight(yIndex-2,xIndex+2,checkFor)){
-                    return 999;
+                    upRightMatch=3;
                 }
             }
         }
@@ -136,14 +161,12 @@ export default function decideOnPlay(boardState, possiblePlays) {
             if(isDownLeft(yIndex+1,xIndex-1,checkFor)){
                 downLeftMatch=2;
                 if(isDownLeft(yIndex+2,xIndex-2,checkFor)){
-                    return 999;
+                    downLeftMatch=3;
                 }
             }
         }
-        const positiveSlope= upRightMatch+downLeftMatch;
-        if( positiveSlope >=3){
-            return 999;
-        }
+        const  positiveSlopeScore = getScore(upRightMatch+downLeftMatch,oneMatchScore,twoMatchScore,threeMatchScore);
+ 
         //negative slope
         let upLeftMatch = 0;
         if(isUpLeft(yIndex,xIndex,checkFor)){
@@ -151,7 +174,7 @@ export default function decideOnPlay(boardState, possiblePlays) {
             if(isUpLeft(yIndex-1,xIndex-1,checkFor)){
                 upLeftMatch=2;
                 if(isUpLeft(yIndex-2,xIndex-2,checkFor)){
-                    return 999;
+                   upLeftMatch=3;
                 }
             }
         }
@@ -161,25 +184,21 @@ export default function decideOnPlay(boardState, possiblePlays) {
             if(isDownRight(yIndex+1,xIndex+1,checkFor)){
                 downRightMatch=2;
                 if(isDownRight(yIndex+2,xIndex+2,checkFor)){
-                    return 999;
+                   downRightMatch=3;
                 }
             }
         }
-        const negativeSlope = upLeftMatch+downRightMatch
-        if(negativeSlope >= 3){
-            return 999;
-        }
+        const  negativeSlopeScore = getScore(upLeftMatch+downRightMatch,oneMatchScore,twoMatchScore,threeMatchScore);
         // now try to calculate the value of it bases on how many in row in each direction
         //
-        const playValue= vertical*multiplier + horizontal*multiplier + positiveSlope*multiplier + negativeSlope*multiplier;
+        const playValue= verticalScore*multiplier + horizontalScore*multiplier + positiveSlopeScore*multiplier + negativeSlopeScore*multiplier;
         return playValue;
     }
-    
-    
-    
-    
     console.table(valueOfPlaysBoard)
     // get the index of the best play 
+    // to to not allow to make play that lets other player make a winning move
+    //pick randomly for play if scores are equal
+    // for multiplier values make pick random values in range to make it feel less robotic 
     let max= 0;
     let maxXIndex;
     valueOfPlaysBoard.forEach((row, yIndex) => 
@@ -194,24 +213,7 @@ export default function decideOnPlay(boardState, possiblePlays) {
                 maxXIndex=xIndex;
             }
         })
-        )      
+    )  
     console.log(maxXIndex)
-
-    // check if you can get have a 4 in a line win
-    // possiblePlays.forEach((canPlay, rowIndex)=>{
-    //     console.log(isDownLeft(4,rowIndex, opponentPlayerNumber), rowIndex)
-    // })
-    // check  if you need to stop other player's 4 in a line win
-    // check if you need to stop other player's 2 turn win 
-    // check if you can play for a 2 turn win 
-    // if first turn play middle 
-    // make set cases for early game and mix in random to make it so it doesn't follow a pattern
-
-    // make a random play
     return maxXIndex;
 }
-
-
-// for the future 
-// make a function that can score each play
-// make a function that uses the play scorer to check future plays
