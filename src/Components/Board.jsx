@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import PlayBoard from './PlayBoard';
 import PlayButtons from './PlayButtons'
 import initBoardState from './initial-board-state';
@@ -12,6 +13,15 @@ const initState= {
   currentHeightofRows: [5,5,5,5,5,5,5],//5 is the bottom row 0 is the top row
   winner: 0 // if winner changes to 1 or 2 depending on player
 }
+
+const StyledBoard = styled.div`
+  margin: 100px;
+  width: 840px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`
+
 export default class Board extends React.Component {
   state = initState;
   // play a turn is the control of the game
@@ -248,11 +258,11 @@ export default class Board extends React.Component {
   }
   render() {
     return (
-      <div className="play-area">
+      <StyledBoard>
         <PlayBoard boardState={this.state.board} />
         <PlayButtons playATurn={this.playATurn} possiblePlays={this.state.possiblePlays} />
         <WinnerDisplay winner={ this.state.winner } resetGame={this.resetGame}/>
-      </div>
+      </StyledBoard>
     )
   }
 }
