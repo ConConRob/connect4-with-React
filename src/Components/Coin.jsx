@@ -1,4 +1,5 @@
 import React from 'react';
+import {TweenMax} from 'gsap';
 import styled from 'styled-components';
 
 const StyledCoin = styled.div`
@@ -9,13 +10,23 @@ const StyledCoin = styled.div`
     margin:10px;
     opacity: 1;
     position: absolute;
-    top: -50px;
-    left: 0px;
 `
 
-export default function Coin({stateOfPosition}){
+export default class Coin extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    componentDidMount(){
+        TweenMax.fromTo(this.coin, 0.4, { top: -1000}, { top: 0});
+    }
 
-    return(
-        <StyledCoin stateOfPosition={stateOfPosition} />
-    )
+    render(){
+        return(
+            <StyledCoin
+                ref={node => (this.coin = node)}
+                 stateOfPosition={this.props.stateOfPosition} 
+            />
+        )
+    }
+
 }
