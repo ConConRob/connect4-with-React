@@ -10,6 +10,10 @@ const StyledCoin = styled.div`
     margin:10px;
     opacity: 1;
     position: absolute;
+    @media (max-width:840px) {
+            margin:5px;
+            width:50px; height:50px;
+        }
 `
 
 export default class Coin extends React.Component{

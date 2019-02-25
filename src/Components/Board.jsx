@@ -15,8 +15,11 @@ const initState= {
 }
 
 const StyledBoard = styled.div`
-  margin: 100px;
+  margin: 0 auto;
   width: 840px;
+  @media (max-width:840px) {
+    width: 420px;
+  }
   display: flex;
   flex-direction: column;
   position: relative;
