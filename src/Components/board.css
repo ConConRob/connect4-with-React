@@ -1,14 +1,5 @@
 
-.play-area {
-    margin: 100px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-.play-board {
-    background: yellow;
-    padding: 10px;
-}
+
 .play-board-row {
     display: flex;
     justify-content: space-evenly;
@@ -33,4 +24,8 @@
 }
 .position-state-2{
     background: red;
+}
+
+.relative{
+    position: relative;
 }
