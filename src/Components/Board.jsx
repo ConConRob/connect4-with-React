@@ -29,6 +29,7 @@ export default class Board extends React.Component {
   state = initState;
   // play a turn is the control of the game
   playATurn = (usersColumnToPlay) =>{
+    this. disableTakingATurn();
     // get the users row played
     // play the users play and checks if it was a winning move then make the computers play
     this.makeAMove(usersColumnToPlay, 1, this.computersTurn )
@@ -36,9 +37,12 @@ export default class Board extends React.Component {
   }
 
   computersTurn = (board) =>{
-    const computersPlay = decideOnPlay(board);
-    this.makeAMove(computersPlay, 2);
-    this.updatePossiblePlays();
+    setTimeout(()=>{
+      const computersPlay = decideOnPlay(board);
+      this.makeAMove(computersPlay, 2);
+      this.updatePossiblePlays();
+    },500)
+
   }
 
   // check if there is a winner function if won returns player else returns 0
@@ -258,11 +262,18 @@ export default class Board extends React.Component {
   resetGame = () => {
     this.setState(initState);
   }
+  // disable playing 
+  disableTakingATurn = () => {
+    this.setState({possiblePlays: [false,false,false,false,false,false,false]});
+  }
   render() {
     return (
       <StyledBoard>
-        <PlayBoard boardState={this.state.board} />
-        <PlayButtons playATurn={this.playATurn} possiblePlays={this.state.possiblePlays} />
+        <PlayBoard 
+          boardState={this.state.board}
+          possiblePlays={this.state.possiblePlays}
+          playATurn={this.playATurn}
+        />
         <WinnerDisplay winner={ this.state.winner } resetGame={this.resetGame}/>
       </StyledBoard>
     )

@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/connect4-with-React/static/js/runtime~main.58dd5d7e.js"
   },
   {
-    "revision": "3293512503b9c70a074f",
-    "url": "/connect4-with-React/static/js/main.32935125.chunk.js"
+    "revision": "e20e7e71658f2d6b7d4f",
+    "url": "/connect4-with-React/static/js/main.e20e7e71.chunk.js"
   },
   {
     "revision": "9054da009dc364c58e6c",
     "url": "/connect4-with-React/static/js/2.9054da00.chunk.js"
   },
   {
-    "revision": "3293512503b9c70a074f",
+    "revision": "e20e7e71658f2d6b7d4f",
     "url": "/connect4-with-React/static/css/main.796b777d.chunk.css"
   },
   {
-    "revision": "09e4772932648a5ba939aaa89cc8e2dc",
+    "revision": "a82b51b839d8a1eda178eee2aaacb27f",
     "url": "/connect4-with-React/index.html"
   }
 ];

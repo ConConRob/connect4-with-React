@@ -1,15 +1,21 @@
 import React from 'react';
 import BoardPosition from './BoardPosition';
+import MakeAMoveColumns from './MakeAMoveColumns';
 import styled from 'styled-components';
 
-const StyledPlayBoardRow = styled.div`
-    display: flex;
-    justify-content: space-evenly;
+const StyledPlayBoard = styled.div`
+  box-shadow: 2px 2px 1px black;
 `
 
-export default function PlayBoard({boardState}){
+const StyledPlayBoardRow = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`
+
+export default function PlayBoard({boardState,  possiblePlays, playATurn}){
+  console.log(possiblePlays)
     return(
-        <div>
+        <StyledPlayBoard>
             {
               boardState.map((row, index) => {
                 return (
@@ -23,6 +29,10 @@ export default function PlayBoard({boardState}){
                 )
               })
             }
-        </div>
+          <MakeAMoveColumns
+            possiblePlays={possiblePlays}
+            playATurn={playATurn}
+          />
+        </StyledPlayBoard>
     )
 }
