@@ -13,11 +13,9 @@ const StyledCoin = styled.div`
 `
 
 export default class Coin extends React.Component{
-    constructor(props){
-        super(props);
-    }
+
     componentDidMount(){
-        TweenMax.fromTo(this.coin, 0.4, { top: -1000}, { top: 0});
+        TweenMax.fromTo(this.coin, .8, { top: -1000}, { top: 0});
     }
 
     render(){

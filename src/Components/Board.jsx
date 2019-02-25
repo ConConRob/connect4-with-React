@@ -29,14 +29,13 @@ export default class Board extends React.Component {
     // get the users row played
     // play the users play and checks if it was a winning move then make the computers play
     this.makeAMove(usersColumnToPlay, 1, this.computersTurn )
-      
-    //update the plays the user can play
-    this.updatePossiblePlays();
+       //update the plays the user can play
   }
 
   computersTurn = (board, rowHeight) =>{
     const computersPlay = decideOnPlay(board);
     this.makeAMove(computersPlay, 2);
+    this.updatePossiblePlays();
   }
 
   // check if there is a winner function if won returns player else returns 0
