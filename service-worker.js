@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "conconrob.github.io/connect4-with-React/precache-manifest.3357cfbfd3a57a8e00441c61601843dc.js"
+  "/connect4-with-React/precache-manifest.64436a6e7b12552d8d716c47da8c0412.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("conconrob.github.io/connect4-with-React/index.html", {
+workbox.routing.registerNavigationRoute("/connect4-with-React/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
