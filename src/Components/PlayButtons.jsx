@@ -1,11 +1,10 @@
 import React from 'react';
-
+import styled from 'styled-components';
 export default function PlayButtons({playATurn, possiblePlays}) {
     function clickAction(Column){
         playATurn(Column);
     }
     return (
-        
         <div className="play-buttons">
         {
             possiblePlays.map((possiblePlay, index) => {
