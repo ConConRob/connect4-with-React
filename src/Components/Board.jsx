@@ -32,7 +32,7 @@ export default class Board extends React.Component {
        //update the plays the user can play
   }
 
-  computersTurn = (board, rowHeight) =>{
+  computersTurn = (board) =>{
     const computersPlay = decideOnPlay(board);
     this.makeAMove(computersPlay, 2);
     this.updatePossiblePlays();
