@@ -25,3 +25,7 @@
 .position-state-2{
     background: red;
 }
+
+.relative{
+    position: relative;
+}
