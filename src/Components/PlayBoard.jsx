@@ -13,7 +13,6 @@ const StyledPlayBoardRow = styled.div`
 `
 
 export default function PlayBoard({boardState,  possiblePlays, playATurn}){
-  console.log(possiblePlays)
     return(
         <StyledPlayBoard>
             {

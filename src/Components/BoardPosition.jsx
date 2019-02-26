@@ -28,8 +28,8 @@ const StyledBoardPosition = styled.div`
 export default function BoardPosition({stateOfPosition}) { 
     // stateOfPosition 0=empty 1=human 2=computer
     return (
-        <div className='relative'><StyledBoardPosition>
-            </StyledBoardPosition>
+        <div className='relative'>
+            <StyledBoardPosition />
             {
                 (stateOfPosition !== 0) &&  <Coin stateOfPosition={stateOfPosition}/>
              

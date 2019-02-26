@@ -47,12 +47,12 @@ export default function decideOnPlay(boardState) {
         }
         return false;
     }
-    function isUp(colPos, rowPos, player){
-        if(boardState[colPos-1] && boardState[colPos-1][rowPos]===player){
-            return true;
-        }
-        return false;
-    }
+    // function isUp(colPos, rowPos, player){
+    //     if(boardState[colPos-1] && boardState[colPos-1][rowPos]===player){
+    //         return true;
+    //     }
+    //     return false;
+    // }
     function isUpRight(colPos, rowPos, player){
         if(boardState[colPos-1] && boardState[colPos-1][rowPos+1]===player){
             return true;
@@ -88,8 +88,8 @@ export default function decideOnPlay(boardState) {
         return 0;
     }
     // for every  spot calculate a score depending on  how many in a row
-    // if can't play spot give a score of -1 
-    const valueOfPlaysBoard = boardState.map((row, yIndex) => 
+    // if can't play spot give a score of -99999
+    let valueOfPlaysBoard = boardState.map((row, yIndex) => 
         row.map((spot, xIndex) => {        
             //check if spot is filled
             if (spot!==0){
@@ -108,7 +108,7 @@ export default function decideOnPlay(boardState) {
             return   valueBasedOnMe + valueBaseOnOtherPlayer + valueBaseOnUnplayedSpace;
         }) 
     )
-    function getValueOfSpot(xIndex, yIndex, checkFor, multiplier,oneMatchScore,twoMatchScore,threeMatchScore){
+    function getValueOfSpot(xIndex, yIndex, checkFor, multiplier=1,oneMatchScore=1,twoMatchScore=2,threeMatchScore=3){
         let leftMatch = 0; 
         if(isLeft(yIndex,xIndex,checkFor)){
             leftMatch=1;
@@ -194,13 +194,10 @@ export default function decideOnPlay(boardState) {
         const playValue= verticalScore*multiplier + horizontalScore*multiplier + positiveSlopeScore*multiplier + negativeSlopeScore*multiplier;
         return playValue;
     }
-    console.table(valueOfPlaysBoard)
-    // get the index of the best play 
-    // to to not allow to make play that lets other player make a winning move
-    //pick randomly for play if scores are equal
-    // for multiplier values make pick random values in range to make it feel less robotic 
+    // get the index of the highest score best play 
     let max= 0;
     let maxXIndex;
+    let maxYIndex;
     valueOfPlaysBoard.forEach((row, yIndex) => 
         row.forEach((spot, xIndex) => {
               //check if spot is playable
@@ -211,9 +208,34 @@ export default function decideOnPlay(boardState) {
             if(spot>=max){
                 max=spot;
                 maxXIndex=xIndex;
+                maxYIndex=yIndex;
             }
         })
-    )  
-    console.log(maxXIndex)
+    )
+    // check if maxXIndex results in lose
+        const canPlayItValue = getValueOfSpot(maxXIndex, maxYIndex, opponentPlayerNumber,1,0,0,9999);
+        // const checkBoard = JSON.parse(JSON.stringify(boardState))
+        // checkBoard[maxYIndex][maxXIndex]= playerNumber;
+        if(canPlayItValue>0){
+            valueOfPlaysBoard[maxXIndex][maxYIndex] = -99999;
+            max= 0;
+            maxXIndex = 0;
+            maxYIndex = 0;
+            valueOfPlaysBoard.forEach((row, yIndex) => 
+                row.forEach((spot, xIndex) => {
+                      //check if spot is playable
+                      if (spot === -99999){
+                        return
+                    }
+                    // check if highest score to play
+                    if(spot>=max){
+                        max=spot;
+                        maxXIndex=xIndex;
+                        maxYIndex=yIndex;
+                    }
+                })
+            )
+        }
+
     return maxXIndex;
 }

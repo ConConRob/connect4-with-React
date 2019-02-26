@@ -29,7 +29,7 @@ export default class Board extends React.Component {
   state = initState;
   // play a turn is the control of the game
   playATurn = (usersColumnToPlay) =>{
-    this. disableTakingATurn();
+    this.disableTakingATurn();
     // get the users row played
     // play the users play and checks if it was a winning move then make the computers play
     this.makeAMove(usersColumnToPlay, 1, this.computersTurn )
