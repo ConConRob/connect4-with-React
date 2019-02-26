@@ -1,13 +1,13 @@
 {
-  "main.css": "/connect4-with-React/static/css/main.42842d63.chunk.css",
-  "main.js": "/connect4-with-React/static/js/main.58a84301.chunk.js",
-  "main.js.map": "/connect4-with-React/static/js/main.58a84301.chunk.js.map",
+  "main.css": "/connect4-with-React/static/css/main.796b777d.chunk.css",
+  "main.js": "/connect4-with-React/static/js/main.98034c23.chunk.js",
+  "main.js.map": "/connect4-with-React/static/js/main.98034c23.chunk.js.map",
   "runtime~main.js": "/connect4-with-React/static/js/runtime~main.58dd5d7e.js",
   "runtime~main.js.map": "/connect4-with-React/static/js/runtime~main.58dd5d7e.js.map",
   "static/js/2.9054da00.chunk.js": "/connect4-with-React/static/js/2.9054da00.chunk.js",
   "static/js/2.9054da00.chunk.js.map": "/connect4-with-React/static/js/2.9054da00.chunk.js.map",
   "index.html": "/connect4-with-React/index.html",
-  "precache-manifest.fb8745eaa85dc416ac390dd4cdccf817.js": "/connect4-with-React/precache-manifest.fb8745eaa85dc416ac390dd4cdccf817.js",
+  "precache-manifest.3e9dcc57070303b2136bc84d6705a095.js": "/connect4-with-React/precache-manifest.3e9dcc57070303b2136bc84d6705a095.js",
   "service-worker.js": "/connect4-with-React/service-worker.js",
-  "static/css/main.42842d63.chunk.css.map": "/connect4-with-React/static/css/main.42842d63.chunk.css.map"
+  "static/css/main.796b777d.chunk.css.map": "/connect4-with-React/static/css/main.796b777d.chunk.css.map"
 }
