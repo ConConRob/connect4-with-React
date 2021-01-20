@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://ConConRob.github.io/connect4-with-React",
   "dependencies": {
-    "gsap": "^2.1.1",
+    "gsap": "^3.6.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-scripts": "2.1.5",
